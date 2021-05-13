@@ -1,0 +1,230 @@
+{
+  "name": "eslint-language-service",
+  "version": "1.0.8",
+  "private": true,
+  "description": "A VSCode-Extension that provides ESLint support using `@manuth/typescript-eslint-plugin`",
+  "author": "Manuel Thalmann <m@nuth.ch>",
+  "license": "MIT",
+  "keywords": [
+    "TypeScript",
+    "ESLint",
+    "language-service",
+    "lint",
+    "plugin",
+    "TypeScript-plugin"
+  ],
+  "engines": {
+    "vscode": "^1.49.0"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "homepage": "https://github.com/manuth/VSCodeESLintLanguageService#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manuth/VSCodeESLintLanguageService.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manuth/VSCodeESLintLanguageService/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "rebuild": "npm run clean && npm run build",
+    "watch": "npm run build -- --watch",
+    "clean": "npm run build -- --clean && rimraf ./lib",
+    "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
+    "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
+    "lint-ide": "npm run lint || exit 0",
+    "prepare": "npm run rebuild",
+    "vscode:prepublish": "npm run rebuild"
+  },
+  "dependencies": {
+    "@manuth/typescript-eslint-plugin": "^1.3.1"
+  },
+  "devDependencies": {
+    "@manuth/eslint-plugin-typescript": "^2.3.3",
+    "@manuth/tsconfig": "^1.2.4",
+    "@types/node": "^14.11.2",
+    "@types/vscode": "^1.49.0",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "eslint": "^7.10.0",
+    "eslint-plugin-deprecation": "^1.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsdoc": "^30.6.3",
+    "rimraf": "^3.0.2",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.3",
+    "vsce": "^1.81.0"
+  },
+  "displayName": "ESLint Language Service",
+  "markdownDescription": "A VSCode-Extension that provides ESLint support using `typescript-eslint-plugin`",
+  "icon": "Resources/Icon.png",
+  "publisher": "manuth",
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
+  "contributes": {
+    "typescriptServerPlugins": [
+      {
+        "name": "@manuth/typescript-eslint-plugin",
+        "enableForWorkspaceTypeScriptVersions": true
+      }
+    ],
+    "languages": [
+      {
+        "id": "ignore",
+        "filenames": [
+          ".eslintignore"
+        ]
+      },
+      {
+        "id": "jsonc",
+        "filenames": [
+          ".eslintrc.json"
+        ]
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": ".eslintrc",
+        "url": "https://json.schemastore.org/eslintrc"
+      },
+      {
+        "fileMatch": ".eslintrc.json",
+        "url": "https://json.schemastore.org/eslintrc"
+      },
+      {
+        "fileMatch": "package.json",
+        "url": "./Resources/eslint.package.json"
+      },
+      {
+        "fileMatch": "jsconfig*.json",
+        "url": "./Resources/tsconfig.schema.json"
+      },
+      {
+        "fileMatch": "tsconfig*.json",
+        "url": "./Resources/tsconfig.schema.json"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "ESLint Language Service",
+        "properties": {
+          "eslint-service.ignoreJavaScript": {
+            "type": "boolean",
+            "default": false,
+            "scope": "window",
+            "description": "Controls whether javascript-files should be ignored."
+          },
+          "eslint-service.ignoreTypeScript": {
+            "type": "boolean",
+            "default": false,
+            "scope": "window",
+            "description": "Controls whether typescript-files should be ignored."
+          },
+          "eslint-service.allowInlineConfig": {
+            "type": "boolean",
+            "default": true,
+            "scope": "window",
+            "description": "Controls whether inline eslint-comments are processed.",
+            "markdownDescription": "Controls whether inline `eslint`-comments are processed."
+          },
+          "eslint-service.reportUnusedDisableDirectives": {
+            "type": "boolean",
+            "default": true,
+            "scope": "window",
+            "description": "Controls whether useless eslint-disable-next-line comments are detected.",
+            "markdownDescription": "Controls whether useless `eslint-disable-next-line` comments are detected."
+          },
+          "eslint-service.useEslintrc": {
+            "type": "boolean",
+            "default": true,
+            "scope": "window",
+            "description": "Controls whether .eslintrc.*-files are processed.",
+            "markdownDescription": "Controls whether `.eslintrc.*`-files are processed."
+          },
+          "eslint-service.configFile": {
+            "type": "string",
+            "scope": "window",
+            "description": "The path to a custom eslintrc-configuration to load.",
+            "markdownDescription": "The path to a custom `eslintrc`-configuration to load."
+          },
+          "eslint-service.alwaysShowRuleFailuresAsWarnings": {
+            "type": "boolean",
+            "default": false,
+            "scope": "window",
+            "description": "Controls whether all rule-failures, regardless whether the rules are set to warn or error, should be reported as warnings.",
+            "markdownDescription": "Controls whether all rule-failures, regardless whether the rules are set to `warn` or `error`, should be reported as warnings."
+          },
+          "eslint-service.suppressWhileTypeErrorsPresent": {
+            "type": "boolean",
+            "default": false,
+            "scope": "window",
+            "description": "Controls whether eslint-reports should be suppressed when there are other errors present.",
+            "markdownDescription": "Controls whether `eslint`-reports should be suppressed when there are other errors present."
+          },
+          "eslint-service.suppressDeprecationWarnings": {
+            "type": "boolean",
+            "default": false,
+            "scope": "window",
+            "description": "Controls whether warnings about the use of deprecated rules should be suppressed."
+          },
+          "eslint-service.suppreccConfigNotFoundError": {
+            "type": "boolean",
+            "default": true,
+            "scope": "window",
+            "description": "Controls whether the absence of an eslint-configuration should be reported.",
+            "markdownDescription": "Controls whether the absence of an `eslint`-configuration should be reported."
+          },
+          "eslint-service.packageManager": {
+            "type": "string",
+            "default": "npm",
+            "scope": "window",
+            "enum": [
+              "npm",
+              "pnpm",
+              "yarn"
+            ],
+            "description": "The package-manager to load global modules.",
+            "enumDescriptions": [
+              "Indicates the Node Package Manager.",
+              "Indicates the pnpm Package Manager.",
+              "Indicates the yarn Package Manager."
+            ],
+            "markdownEnumDescriptions": [
+              "Indicates the Node Package Manager.",
+              "Indicates the `pnpm` Package Manager.",
+              "Indicates the `yarn` Package Manager."
+            ]
+          },
+          "eslint-service.logLevel": {
+            "type": "string",
+            "default": "none",
+            "scope": "window",
+            "enum": [
+              "none",
+              "normal",
+              "verbose"
+            ],
+            "description": "The level of logging.",
+            "enumDescriptions": [
+              "Disables logging.",
+              "Logs information-messages.",
+              "Logs all messages."
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

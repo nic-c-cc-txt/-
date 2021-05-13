@@ -1,0 +1,87 @@
+{
+	"name": "playground",
+	"displayName": "Playground",
+	"description": "Extension to support playground to upload Salesforce code from vscode",
+	"version": "1.0.2",
+	"publisher": "lkatney",
+	"engines": {
+		"vscode": "^1.33.0"
+	},
+	"icon": "images/just-logo.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lkatney/playground-vscode-extension.git"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "playground.create",
+				"title": "Playground: Push & Create Play"
+			},
+			{
+				"command": "playground.update",
+				"title": "Playground:  Push & Update Play"
+			},
+			{
+				"command": "playground.connect",
+				"title": "Playground: Connect"
+			},
+			{
+				"command": "playground.ignorefile",
+				"title": "Playground: Add .playgignore"
+			},
+			{
+				"command": "playground.init",
+				"title": "Playground: Init"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Playground",
+			"properties": {
+				"playground.origin": {
+					"type": "string",
+					"default": "https://live.playg.app",
+					"description": "Url to connect with Playground Server"
+				}
+			}
+		},
+		"languages": [
+			{
+				"id": "ignore",
+				"aliases": [
+					"ignore"
+				],
+				"extensions": [
+					".playgignore"
+				]
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^2.2.42",
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28"
+	},
+	"dependencies": {
+		"@types/node": "^10.12.21",
+		"glob": "^7.1.6",
+		"node-native-zip": "^1.1.0",
+		"request": "^2.88.0"
+	}
+}

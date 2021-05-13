@@ -1,0 +1,140 @@
+{
+	"name": "stylelint-stzhang",
+	"version": "0.1.6",
+	"displayName": "stylelint-stzhang",
+	"description": "Modern CSS/SCSS/Less linter",
+	"publisher": "stuartzhang",
+	"repository": "https://github.com/stuartZhang/vscode-stylelint.git",
+	"homepage": "https://github.com/stuartZhang/vscode-stylelint.git#readme",
+	"bugs": "https://github.com/stuartZhang/vscode-stylelint/issues",
+	"license": "ISC",
+	"icon": "media/icon.png",
+	"galleryBanner": {
+		"color": "#32CD32",
+		"theme": "light"
+	},
+	"engines": {
+		"vscode": ">=1.26.0"
+	},
+	"categories": [
+		"Linters"
+	],
+	"keywords": [
+		"lint",
+		"style",
+		"stylelint",
+		"validation",
+		"check"
+	],
+	"activationEvents": [
+		"onLanguage:css",
+		"onLanguage:html",
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:less",
+		"onLanguage:markdown",
+		"onLanguage:postcss",
+		"onLanguage:sass",
+		"onLanguage:scss",
+		"onLanguage:source.css.styled",
+		"onLanguage:source.markdown.math",
+		"onLanguage:styled-css",
+		"onLanguage:sugarss",
+		"onLanguage:svelte",
+		"onLanguage:typescript",
+		"onLanguage:typescriptreact",
+		"onLanguage:vue",
+		"onLanguage:vue-html",
+		"onLanguage:xml",
+		"onLanguage:xsl"
+	],
+	"main": "index.js",
+	"contributes": {
+		"commands": [{
+			"command": "stylelint.executeAutoFix",
+			"title": "Fix all auto-fixable Problems",
+			"category": "stylelint"
+		}],
+		"configuration": {
+			"type": "object",
+			"title": "stylelint configuration options",
+			"properties": {
+				"stylelint.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Control whether stylelint is enabled for CSS/SCSS/Less files or not."
+				},
+				"stylelint.trace.server": {
+					"type": "string",
+					"enum": [
+						"verbose",
+						"messages",
+						"off"
+					],
+					"default": "off",
+					"description": "Control whether stylelint outputs the runtime logs to the `stylelint` channel or not."
+				},
+				"stylelint.autoFix": {
+					"type": "boolean",
+					"default": false,
+					"description": "Control whether stylelint automatically fixes as many errors as possible or not."
+				},
+				"stylelint.config": {
+					"type": [
+						"object",
+						"null"
+					],
+					"default": null,
+					"description": "A stylelint configuration object."
+				},
+				"stylelint.configOverrides": {
+					"type": [
+						"object",
+						"null"
+					],
+					"default": null,
+					"description": "A partial stylelint config whose properties override the existing ones."
+				}
+			}
+		},
+		"jsonValidation": [{
+			"fileMatch": "**/.stylelintrc*",
+			"url": "http://json.schemastore.org/stylelintrc.json"
+		}],
+		"languages": [{
+			"id": "ignore",
+			"filenames": [
+				".stylelintignore"
+			]
+		}]
+	},
+	"scripts": {
+		"pretest": "eslint .",
+		"test": "node node_modules/vscode/bin/test"
+	},
+	"dependencies": {
+		"array-to-error": "^1.1.1",
+		"array-to-sentence": "^2.0.0",
+		"find-pkg-dir": "^1.0.1",
+		"inspect-with-kind": "^1.0.5",
+		"lodash": "^4.17.11",
+		"path-is-inside": "^1.0.2",
+		"postcss": "^7.0.5",
+		"postcss-html": "^0.34.0",
+		"postcss-jsx": "^0.34.0",
+		"postcss-markdown": "^0.34.0",
+		"postcss-syntax": "^0.34.0",
+		"stylelint-warning-to-vscode-diagnostic": "^1.0.1",
+		"vscode-languageclient": "^5.1.0",
+		"vscode-languageserver": "^5.1.0"
+	},
+	"devDependencies": {
+		"@shinnn/eslint-config": "^6.7.2",
+		"eslint": "^5.7.0",
+		"tape": "^4.9.1",
+		"vscode": "^1.1.21"
+	},
+	"eslintConfig": {
+		"extends": "@shinnn"
+	}
+}

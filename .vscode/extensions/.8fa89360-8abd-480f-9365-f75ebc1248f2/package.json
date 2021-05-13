@@ -1,0 +1,60 @@
+{
+  "name": "file-record",
+  "displayName": "File Record",
+  "description": "Automatically keep a local record of file changes",
+  "version": "0.0.5",
+  "license": "ISC",
+  "publisher": "ianwalter",
+  "author": {
+    "name": "Ian Walter",
+    "email": "public@iankwalter.com",
+    "url": "https://iankwalter.com"
+  },
+  "homepage": "https://github.com/ianwalter/file-record#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianwalter/file-record.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ianwalter/file-record/issues"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "history",
+    "file",
+    "local",
+    "copy",
+    "backup"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "dependencies": {
+    "date-fns": "^1.29.0",
+    "find-parent-dir": "^0.3.0",
+    "mkdirp": "^0.5.1",
+    "mkdirpsync": "^0.1.0",
+    "pify": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.43",
+    "jest": "^22.3.0",
+    "tslint": "^5.8.0",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.17"
+  },
+  "engines": {
+    "vscode": "^1.20.0"
+  }
+}

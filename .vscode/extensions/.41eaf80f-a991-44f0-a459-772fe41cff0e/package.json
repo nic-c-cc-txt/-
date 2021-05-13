@@ -1,0 +1,103 @@
+{
+	"name": "time-capsule",
+	"displayName": "Time Capsule",
+	"description": "Welcome to the future, and the past.",
+	"version": "0.0.7",
+	"publisher": "JohnSusek",
+	"keywords": [
+		"backup",
+		"snapshot",
+        "clone",
+        "recovery"
+	],
+	"author": {
+		"name": "John Susek",
+		"email": "john@johnsolo.net"
+	},
+	"enableProposedApi": false,
+	"engines": {
+		"vscode": "^1.36.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onView:timeCapsule"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "time-capsule",
+					"title": "Time Capsule",
+					"icon": "media/history.svg"
+				}
+			]
+		},
+		"views": {
+			"time-capsule": [
+				{
+					"id": "timeCapsule",
+					"name": "Snapshots"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "timeCapsule.addEntry",
+        "category": "Time Capsule",
+				"title": "Create Snapshot",
+				"icon": {
+					"light": "resources/light/camera.svg",
+					"dark": "resources/dark/camera.svg"
+				}
+			},
+			{
+				"command": "timeCapsule.diffEntry",
+				"title": "View Diff",
+				"icon": {
+					"light": "resources/light/diff.svg",
+					"dark": "resources/dark/diff.svg"
+				}
+			}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "timeCapsule.addEntry",
+					"when": "view == timeCapsule",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "timeCapsule.diffEntry",
+					"when": "view == timeCapsule && viewItem == snapshot",
+					"group": "inline"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/mkdirp": "^0.5.2",
+		"@types/node": "^10.12.21",
+		"@types/rimraf": "^2.0.2",
+		"@types/vscode": "^1.36.0",
+		"typescript": "^3.5.1",
+		"tslint": "^5.12.1"
+	},
+	"dependencies": {
+		"cowsay": "^1.4.0",
+		"date-fns": "^2.3.0",
+		"mkdirp": "^0.5.1",
+		"plist": "^3.0.1",
+		"rimraf": "^2.6.2",
+		"vscode-extension-telemetry": "^0.1.2"
+	}
+}

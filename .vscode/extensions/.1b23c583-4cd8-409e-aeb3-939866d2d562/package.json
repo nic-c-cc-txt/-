@@ -1,0 +1,190 @@
+{
+	"name": "vscode-healthier",
+	"displayName": "Healthier Linter",
+	"description": "Healthier is an opinionated style agnostic code linter – a friendly companion to Prettier",
+	"version": "3.0.0",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/KidkArolis/vscode-healthier.git"
+	},
+	"bugs": {
+		"url": "https://github.com/KidkArolis/vscode-healthier/issues"
+	},
+	"author": {
+		"name": "Karolis Narkevicius",
+		"email": "hey@kn8.lt",
+		"url": "https://github.com/KidkArolis"
+	},
+	"publisher": "KidkArolis",
+	"icon": "icon.png",
+	"categories": [
+		"Programming Languages",
+		"Linters"
+	],
+	"keywords": [
+		"multi-root ready"
+	],
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"activationEvents": [
+		"*"
+	],
+	"main": "./client/out/extension",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Healthier",
+			"properties": {
+				"healthier.enable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Controls whether healthier is enabled for JavaScript files or not."
+				},
+				"healthier.trace.server": {
+					"scope": "window",
+					"anyOf": [
+						{
+							"type": "string",
+							"enum": [
+								"off",
+								"messages",
+								"verbose"
+							],
+							"default": "off"
+						},
+						{
+							"type": "object",
+							"properties": {
+								"verbosity": {
+									"type": "string",
+									"enum": [
+										"off",
+										"messages",
+										"verbose"
+									],
+									"default": "off"
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"text",
+										"json"
+									],
+									"default": "text"
+								}
+							}
+						}
+					],
+					"default": "off",
+					"description": "Traces the communication between VSCode and the healthier linter service."
+				},
+				"healthier.run": {
+					"scope": "resource",
+					"type": "string",
+					"enum": [
+						"onSave",
+						"onType"
+					],
+					"default": "onType",
+					"description": "Run the linter on save (onSave) or on type (onType)"
+				},
+				"healthier.validate": {
+					"scope": "resource",
+					"type": "array",
+					"items": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "object",
+								"properties": {
+									"language": {
+										"type": "string",
+										"description": "The language id to be validated by Healthier"
+									},
+									"autoFix": {
+										"type": "boolean",
+										"description": "Whether auto fixes are provided for the language"
+									}
+								}
+							}
+						]
+					},
+					"default": [
+						"javascript",
+						"javascriptreact"
+					],
+					"description": "An array of language ids which should be validated by Healthier"
+				},
+				"healthier.provideLintTask": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Controls whether a task for linting the whole workspace will be available."
+				},
+				"healthier.runtime": {
+					"scope": "window",
+					"type": [
+						"string",
+						"null"
+					],
+					"default": null,
+					"description": "The location of the node binary to run Healthier under."
+				}
+			}
+		},
+		"commands": [
+			{
+				"title": "Enable Healthier",
+				"category": "Healthier",
+				"command": "healthier.enable"
+			},
+			{
+				"title": "Disable Healthier",
+				"category": "Healthier",
+				"command": "healthier.disable"
+			},
+			{
+				"title": "Show Output Channel",
+				"category": "Healthier",
+				"command": "healthier.showOutputChannel"
+			}
+		],
+		"jsonValidation": [
+			{
+				"fileMatch": ".eslintrc",
+				"url": "http://json.schemastore.org/eslintrc"
+			},
+			{
+				"fileMatch": ".eslintrc.json",
+				"url": "http://json.schemastore.org/eslintrc"
+			}
+		],
+		"languages": [
+			{
+				"id": "ignore",
+				"filenames": [
+					".eslintignore"
+				]
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
+		"compile": "tsc -b",
+		"compile:client": "tsc -b ./client/tsconfig.json",
+		"compile:server": "tsc -b ./server/tsconfig.json",
+		"watch": "tsc -b -w",
+		"clean": "tsc -b --clean",
+		"postinstall": "cd client && npm install && cd ../server && npm install && cd .."
+	},
+	"devDependencies": {
+		"typescript": "^3.2.4",
+		"@types/node": "^8.0.0",
+		"tslint": "^5.11.0"
+	}
+}

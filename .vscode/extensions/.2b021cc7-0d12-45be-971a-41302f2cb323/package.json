@@ -1,0 +1,147 @@
+{
+  "name": "vscode-gist",
+  "displayName": "Gist",
+  "description": "Create, open and edit Gists",
+  "version": "3.0.3",
+  "publisher": "kenhowardpdx",
+  "repository": "https://github.com/kenhowardpdx/vscode-gist",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#387cc0",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Gist configuration",
+      "properties": {
+        "gist.maxFiles": {
+          "type": "number",
+          "default": 10,
+          "description": "The maximum number of files to open without a prompt."
+        },
+        "gist.defaultPrivate": {
+          "type": "boolean",
+          "default": false,
+          "description": "Defaults all newly created Gists to PRIVATE."
+        },
+        "gist.profileOptions": {
+          "type": "object",
+          "default": {},
+          "description": "Override profile configuration options."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.gist.open",
+        "title": "Open Gist",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.gist.openFavorite",
+        "title": "Open Favorite Gist",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.gist.create",
+        "title": "Create New Gist",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.gist.openInBrowser",
+        "title": "Open Gist In Browser",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.gist.delete",
+        "title": "Delete Gist",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.gist.deleteFile",
+        "title": "Delete File",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.gist.add",
+        "title": "Add File",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.gist.insert",
+        "title": "Insert Text From Gist File",
+        "category": "GIST"
+      },
+      {
+        "command": "extension.profile.select",
+        "title": "Select Profile",
+        "category": "GIST"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.profile.select",
+        "key": "ctrl+alt+="
+      },
+      {
+        "command": "extension.resetState",
+        "key": "ctrl+shift+0"
+      },
+      {
+        "command": "extension.gist.add",
+        "key": "ctrl+alt+a ctrl+alt+a"
+      },
+      {
+        "command": "extension.gist.openInBrowser",
+        "key": "ctrl+alt+b"
+      },
+      {
+        "command": "extension.gist.open",
+        "key": "ctrl+alt+o"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p tsconfig.prod.json",
+    "lint": "tslint -p tsconfig.json",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "prettier": "prettier --config .prettierrc.json --list-different 'src/**/*.ts'",
+    "release": "standard-version",
+    "test:integration": "npm run compile && node ./node_modules/vscode/bin/test",
+    "test:unit": "jest --coverage --silent",
+    "test:watch": "npm run test:unit -- --watchAll",
+    "test": "npm run lint && npm run prettier && npm run test:unit",
+    "vscode:prepublish": "npm run compile",
+    "watch": "tsc -watch -p tsconfig.prod.json"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^8.10.25",
+    "@types/tmp": "0.0.33",
+    "coveralls": "^3.0.2",
+    "jest": "^23.6.0",
+    "prettier": "^1.15.3",
+    "standard-version": "^4.4.0",
+    "ts-jest": "^23.10.4",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6",
+    "vscode": "^1.1.26"
+  },
+  "dependencies": {
+    "@octokit/rest": "^16.1.0",
+    "tmp": "0.0.33",
+    "vscode-extension-telemetry": "^0.1.0"
+  }
+}
